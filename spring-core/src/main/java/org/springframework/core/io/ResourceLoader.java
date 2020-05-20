@@ -38,6 +38,8 @@ import org.springframework.util.ResourceUtils;
  * @see org.springframework.core.io.support.ResourcePatternResolver
  * @see org.springframework.context.ApplicationContext
  * @see org.springframework.context.ResourceLoaderAware
+ *
+ * 统一资源加载器
  */
 public interface ResourceLoader {
 
@@ -63,6 +65,12 @@ public interface ResourceLoader {
 	 * @see #CLASSPATH_URL_PREFIX
 	 * @see Resource#exists()
 	 * @see Resource#getInputStream()
+	 *
+	 * 加载资源，但是不确保资源一定存在，需要调用Resource#exist()来判断
+	 * 支持以下模式加载资源：
+	 * URL:"file:C:/test.dat".
+	 * ClassPath: "classpath:test.dat".
+	 * 相对路径："WEB-INF/test.dat".
 	 */
 	Resource getResource(String location);
 

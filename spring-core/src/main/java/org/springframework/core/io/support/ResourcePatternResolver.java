@@ -50,6 +50,8 @@ import org.springframework.core.io.ResourceLoader;
  * @see org.springframework.core.io.ResourceLoader
  * @see org.springframework.context.ApplicationContext
  * @see org.springframework.context.ResourceLoaderAware
+ *
+ * 最常用的实现类为PathMatchingResourcePatternResolver
  */
 public interface ResourcePatternResolver extends ResourceLoader {
 
@@ -59,6 +61,8 @@ public interface ResourcePatternResolver extends ResourceLoader {
 	 * retrieves all matching resources for a given name (e.g. "/beans.xml"),
 	 * for example in the root of all deployed JAR files.
 	 * @see org.springframework.core.io.ResourceLoader#CLASSPATH_URL_PREFIX
+	 *
+	 * 相比ResourceLoader多了这种协议前缀
 	 */
 	String CLASSPATH_ALL_URL_PREFIX = "classpath*:";
 
@@ -70,6 +74,8 @@ public interface ResourcePatternResolver extends ResourceLoader {
 	 * @param locationPattern the location pattern to resolve
 	 * @return the corresponding Resource objects
 	 * @throws IOException in case of I/O errors
+	 *
+	 * 对ResourceLoader的扩展，支持加载多个Resource
 	 */
 	Resource[] getResources(String locationPattern) throws IOException;
 

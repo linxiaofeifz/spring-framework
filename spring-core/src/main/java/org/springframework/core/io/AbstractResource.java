@@ -16,6 +16,10 @@
 
 package org.springframework.core.io;
 
+import org.springframework.core.NestedIOException;
+import org.springframework.lang.Nullable;
+import org.springframework.util.ResourceUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,10 +29,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-
-import org.springframework.core.NestedIOException;
-import org.springframework.lang.Nullable;
-import org.springframework.util.ResourceUtils;
 
 /**
  * Convenience base class for {@link Resource} implementations,
@@ -52,10 +52,12 @@ public abstract class AbstractResource implements Resource {
 	public boolean exists() {
 		// Try file existence: can we find the file in the file system?
 		try {
+			// 基于 File 进行判断
 			return getFile().exists();
 		}
 		catch (IOException ex) {
 			// Fall back to stream existence: can we open the stream?
+			// 基于 InputStream 进行判断
 			try {
 				getInputStream().close();
 				return true;
@@ -94,6 +96,7 @@ public abstract class AbstractResource implements Resource {
 	/**
 	 * This implementation throws a FileNotFoundException, assuming
 	 * that the resource cannot be resolved to a URL.
+	 * 交给子类实现
 	 */
 	@Override
 	public URL getURL() throws IOException {
@@ -140,6 +143,8 @@ public abstract class AbstractResource implements Resource {
 	 * content length. Subclasses will almost always be able to provide
 	 * a more optimal version of this, e.g. checking a File length.
 	 * @see #getInputStream()
+	 * 获取资源长度
+	 * 这个资源内容长度实际就是资源的字节长度，通过全部读取一遍
 	 */
 	@Override
 	public long contentLength() throws IOException {
@@ -193,6 +198,8 @@ public abstract class AbstractResource implements Resource {
 	/**
 	 * This implementation throws a FileNotFoundException, assuming
 	 * that relative resources cannot be created for this resource.
+	 *
+	 * 交给子类实现
 	 */
 	@Override
 	public Resource createRelative(String relativePath) throws IOException {

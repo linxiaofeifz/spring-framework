@@ -16,6 +16,8 @@
 
 package org.springframework.core.io;
 
+import org.springframework.lang.Nullable;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +25,6 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-
-import org.springframework.lang.Nullable;
 
 /**
  * Interface for a resource descriptor that abstracts from the actual
@@ -48,6 +48,8 @@ import org.springframework.lang.Nullable;
  * @see ClassPathResource
  * @see ByteArrayResource
  * @see InputStreamResource
+ *
+ * 统一资源定义
  */
 public interface Resource extends InputStreamSource {
 
@@ -56,6 +58,8 @@ public interface Resource extends InputStreamSource {
 	 * <p>This method performs a definitive existence check, whereas the
 	 * existence of a {@code Resource} handle only guarantees a valid
 	 * descriptor handle.
+	 *
+	 * 资源是否存在
 	 */
 	boolean exists();
 
@@ -69,6 +73,8 @@ public interface Resource extends InputStreamSource {
 	 * that the resource content cannot be read.
 	 * @see #getInputStream()
 	 * @see #exists()
+	 *
+	 * 资源是否可读
 	 */
 	default boolean isReadable() {
 		return exists();
