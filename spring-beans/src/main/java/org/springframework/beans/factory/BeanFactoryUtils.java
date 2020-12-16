@@ -77,12 +77,18 @@ public abstract class BeanFactoryUtils {
 	 * @param name the name of the bean
 	 * @return the transformed name
 	 * @see BeanFactory#FACTORY_BEAN_PREFIX
+	 *
+	 * 去除 FactoryBean 的修饰符 &
+	 *
+	 * 如果 name 以 “&” 为前缀，那么会去掉该 "&" 。
+	 * 例如，name = "&studentService" ，则会是 name = "studentService"。
 	 */
 	public static String transformedBeanName(String name) {
 		Assert.notNull(name, "'name' must not be null");
 		if (!name.startsWith(BeanFactory.FACTORY_BEAN_PREFIX)) {
 			return name;
 		}
+		// transformedBeanNameCache的存在，是为了缓存转换后的结果。下次再获取相同的 name 时，直接返回缓存中的结果即可
 		return transformedBeanNameCache.computeIfAbsent(name, beanName -> {
 			do {
 				beanName = beanName.substring(BeanFactory.FACTORY_BEAN_PREFIX.length());
